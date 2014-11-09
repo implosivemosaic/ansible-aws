@@ -1,0 +1,21 @@
+---
+
+
+- name: "Provision classic instances."
+  local_action:
+    module: ec2
+
+    instance_tags: "{{ item.tags }}"
+    exact_count: "{{ item.count | default(aws_instance_count) }}"
+    count_tag: "{{ item.match_tags | default(item.tags) }}"
+    instance_type: "{{ item.type | default(aws_instance_type) }}"
+    image: "{{ item.image_id | default(aws_instance_image_id) }}"
+    region: "{{ aws_vpc_region }}"
+    source_dest_check: "{{ item.block_nat | default(aws_instance_block_nat) }}"
+    keypair: "{{ item.ssh_keypair | default(aws_instance_ssh_keypair) }}"
+    group: "{{ item.security_groups }}"
+    wait: yes
+  with_items: "aws_public_instances"
+  register: ec2_public_result
+  when: "aws_public_instances is defined"
+

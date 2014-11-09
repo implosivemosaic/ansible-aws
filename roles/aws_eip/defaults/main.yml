@@ -1,0 +1,18 @@
+---
+
+# Assign Elastic IP to EC2 instance
+# returns: ec2_eip
+
+# The EC2 instance VPC region.
+# example: "us-east-1"
+aws_vpc_region:
+
+# The ID of the EC2 instance.
+# example: "i-c3caf62a"
+aws_ec2_id:
+
+# The IP address to assign to the instance.
+# If left blank, a new IP will be created.
+# example: "127.0.0.1"
+aws_elastic_ip:
+

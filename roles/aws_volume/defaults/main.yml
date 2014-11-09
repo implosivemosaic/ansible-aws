@@ -1,0 +1,42 @@
+---
+
+
+# Attaches a (potentially new) volume to an EC2 instance,
+# formats and permanently (fstab) mounts the new device.
+# returns: aws_volume
+
+# Note that if the volume already exists, the filesystem
+# task will not format or otherwise destroy data.
+# This role should be safe for volumes that already exist
+# and contain data.
+
+# EC2 Instance ID.
+aws_ec2_id:
+
+# VPC region.
+aws_vpc_region:
+
+# The EC2 tag "Name" for the volume.
+# example: "foo_0"
+aws_volume_name:
+
+# Number of IOPS to allocate.
+# example: "3000"
+aws_volume_iops:
+
+# The size in GB.
+# example: "1000"
+aws_volume_size:
+
+# The filesystem type.
+# example: "ext4"
+aws_fs_type:
+
+# The filesystem device path.
+# example: "/dev/sdf"
+aws_fs_device:
+
+# The filesystem mount path.
+# example: "/data"
+aws_fs_mount_path:
+

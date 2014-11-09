@@ -1,0 +1,12 @@
+---
+
+
+- name: "create route53 record"
+  route53:
+    command: create
+    overwrite: yes
+    record: "{{ r53_name }}"
+    type: "{{ r53_type }}"
+    ttl: "{{ r53_ttl }}"
+    value: "{{ r53_value }}"
+

@@ -1,0 +1,42 @@
+---
+
+
+# Load AWS credentials from env to support multiple accounts
+# without requiring a change to a file (or inventory file).
+aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+aws_s3_gpg_pass: "{{ lookup('file', secrets_dir + '/aws_s3_gpg_pass') }}"
+
+aws_vpc_region: us-east-1
+aws_vpc_network: 10.1.0.0/16
+
+aws_subnet_app: 10.1.2.0/24
+aws_subnet_app_gw: 10.1.1.0/24
+
+aws_vpc:
+
+  tags:
+    Name: "{{ env }}_vpc"
+
+  subnets:
+    - cidr: "{{ aws_subnet_app_gw }}"
+      az: "us-east-1b"
+      resource_tags:
+        Name: "{{ env }}_app_gw"
+    - cidr: "{{ aws_subnet_app }}"
+      az: "us-east-1b"
+      resource_tags:
+        Name: "{{ env }}_app"
+
+aws_vpc_route_tables:
+  - subnets:
+      - "{{ aws_subnet_app }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gw: "{{ hostvars[groups.DEMO_GROUP_REPLACE_ME[0]].ec2_id }}"
+  - subnets:
+      - "{{ aws_subnet_app_gw }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gw: igw
+

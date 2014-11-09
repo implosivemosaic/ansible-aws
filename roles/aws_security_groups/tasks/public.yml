@@ -1,0 +1,14 @@
+---
+
+
+- name: "Create public security group."
+  local_action:
+    module: ec2_group
+    state: present
+    name: "{{ item.name }}"
+    description: "Security group for {{ item.name }}."
+    region: "{{ aws_vpc_region }}"
+    rules: "{{ item.ports }}"
+  with_items: "aws_public_security_groups"
+  register: aws_public_security_groups_result
+  when: "aws_public_security_groups is defined"

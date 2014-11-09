@@ -1,0 +1,20 @@
+---
+
+
+- name: "Create VPC."
+  local_action:
+    module: ec2_vpc
+    state: present
+
+    cidr_block: "{{ aws_vpc_network }}"
+    resource_tags: "{{ aws_vpc_tags }}"
+    region: "{{ aws_vpc_region }}"
+    subnets: "{{ aws_subnets }}"
+
+    internet_gateway: true
+    route_tables_enabled: "{{ aws_vpc_route_tables_enabled }}"
+    route_tables: "{{ aws_vpc_route_tables }}"
+    wait: true
+    wait_timeout: 60
+  register: aws_vpc_result
+

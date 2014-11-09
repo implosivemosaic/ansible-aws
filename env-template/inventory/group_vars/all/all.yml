@@ -1,0 +1,8 @@
+---
+
+
+env: DEMO_REPLACE_ME
+
+secrets_dir: "{{ inventory_dir }}/../secrets"
+misc_dir: "{{ inventory_dir }}/../misc"
+

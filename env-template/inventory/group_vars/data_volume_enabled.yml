@@ -1,0 +1,7 @@
+---
+
+aws_volume_name: "volume_{{ inventory_hostname }}"
+aws_volume_iops: 3000
+aws_volume_size: 1000
+aws_fs_device: "/dev/sdf"
+

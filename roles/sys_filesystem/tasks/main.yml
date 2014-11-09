@@ -1,0 +1,17 @@
+---
+
+
+- name: "Make filesystem on device."
+  sudo: yes
+  filesystem:
+    fstype: "{{ filesystem_type }}"
+    dev: "{{ filesystem_device }}"
+
+- name: "Mount device."
+  sudo: yes
+  mount:
+    name: "{{ filesystem_mount_path }}"
+    src: "{{ filesystem_device }}"
+    fstype: "{{ filesystem_type }}"
+    state: mounted
+

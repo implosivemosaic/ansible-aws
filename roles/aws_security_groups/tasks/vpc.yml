@@ -1,0 +1,15 @@
+---
+
+
+- name: "Create security groups."
+  local_action:
+    module: ec2_group
+    state: present
+    name: "{{ item.name }}"
+    description: "Security group for {{ item.name }}."
+    vpc_id: "{{ aws_vpc_id }}"
+    region: "{{ aws_vpc_region }}"
+    rules: "{{ item.ports }}"
+  with_items: "aws_security_groups"
+  register: aws_security_groups_result
+

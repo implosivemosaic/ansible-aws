@@ -1,0 +1,29 @@
+---
+
+
+- include: "classic.yml"
+- include: "vpc.yml"
+
+
+- name: "Map EC2 instance results to denormalized lists."
+  set_fact:
+    ec2: "{{ ec2_result.results | list_flatten('tagged_instances', ['item']) }}"
+
+
+- name: "Add EC2 hosts to groups based on tags."
+  local_action:
+    module: add_host
+    name: "{{ item.private_ip }}"
+    groups: "{{ item.item.tags | merge('tag_{key}_{value}') | join(',') }}"
+
+    ec2_id: "{{ item.id }}"
+    ec2_tag_Name: "{{ item.item.tags['Name'] }}"
+    ec2_private_ip_address: "{{ item.private_ip }}"
+    ec2_ip_address: "{{ item.public_ip }}"
+    ec2_placement: "{{ item.placement }}"
+    ec2_architecture: "{{ item.architecture }}"
+    ec2_hypervisor: "{{ item.hypervisor }}"
+    ec2_state: "{{ item.state }}"
+    ec2_root_device_name: "{{ item.root_device_name }}"
+  with_items: "ec2"
+

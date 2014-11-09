@@ -1,0 +1,7 @@
+---
+
+
+aws_keys_files:
+  - name: "{{ env }}_automation"
+    path: "{{ secrets_dir }}/ssh_keys/automation.pem.pub"
+

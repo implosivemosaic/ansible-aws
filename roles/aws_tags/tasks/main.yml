@@ -1,0 +1,12 @@
+---
+
+
+- name: "Tag instances."
+  local_action:
+    module: ec2_tag
+    state: present
+    region: "{{ aws_vpc_region }}"
+    resource: "{{ aws_resource_id }}"
+    tags: "{{ aws_tags }}"
+  register: aws_tags_result
+

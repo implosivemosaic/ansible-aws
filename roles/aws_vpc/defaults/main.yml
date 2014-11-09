@@ -1,0 +1,10 @@
+---
+
+
+# Creates an AWS VPC
+# returns: aws_vpc_result
+
+
+aws_vpc_network:
+
+

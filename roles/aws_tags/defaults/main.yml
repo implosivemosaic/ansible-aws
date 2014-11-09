@@ -1,0 +1,22 @@
+---
+
+
+# Assigns tags to an existing AWS resource.
+# returns: aws_tags_result
+
+
+# The VPC region of the resource.
+# example: "us-east-1"
+aws_vpc_region:
+
+# The AWS resource ID.
+# example: i-1abc234
+aws_resource_id:
+
+# A dictionary of tags to assign to the resource.
+# example:
+#   aws_tags:
+#     env: production
+#     tier: database
+aws_tags: {}
+

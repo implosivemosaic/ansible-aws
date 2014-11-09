@@ -1,0 +1,24 @@
+---
+
+
+aws_all_instances:
+# WEB TIER
+
+  - tags:
+      Name: "{{ env }}_NAME_REPLACE_ME"
+      env: "{{ env }}"
+      tier: web
+    image_id: AMI_REPLACE_ME
+    type: t2.micro
+    block_nat: true
+    public: true
+    ssh_keypair: "{{ env }}_KEY_REPLACE_ME"
+    count: 1
+    subnet_name: "{{ env }}_SUBNET_REPLACE_ME"
+    block_nat: false
+    is_public: true
+    security_groups:
+      - "{{ env }}_ssh"
+      - "{{ env }}_web"
+    is_gateway: true
+

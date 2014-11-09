@@ -1,0 +1,15 @@
+---
+
+
+# - debug: msg="{{ lookup('file', item.path) }}"
+#   with_items: "aws_keys_files"
+
+- name: "create keys"
+  local_action:
+    module: ec2_key
+    state: present
+    region: "{{ aws_vpc_region }}"
+    name: "{{ item.name }}"
+    key_material: "{{ lookup('file', item.path) }}"
+  with_items: "aws_keys_files"
+

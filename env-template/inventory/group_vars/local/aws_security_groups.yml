@@ -1,0 +1,14 @@
+---
+
+
+aws_security_groups:
+
+  - name: "{{ env }}_ssh"
+    ports:
+      - {from_port: 22, to_port: 22, proto: tcp, cidr_ip: 0.0.0.0/0}
+
+  - name: "{{ env }}_web"
+    ports:
+      - {from_port: 80, to_port: 80, proto: tcp, cidr_ip: 0.0.0.0/0}
+      - {from_port: 443, to_port: 443, proto: tcp, cidr_ip: 0.0.0.0/0}
+

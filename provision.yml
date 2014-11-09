@@ -1,0 +1,75 @@
+---
+
+
+# Provisions AWS VPC network and related resources.
+
+# The next two 'local' plays run locally and require lists of configuration data.
+# Most variables come from group_vars/all/all/*
+- name: "Provision AWS VPC, security groups, keys and instances."
+  gather_facts: no
+  hosts: local
+  vars:
+    aws_filter: ""
+    aws_vpc_tags: "{{ aws_vpc.tags }}"
+    aws_subnets: "{{ aws_vpc.subnets }}"
+    aws_vpc_route_tables_enabled: no
+    aws_vpc_route_tables: []
+    aws_vpc_subnet_ids: "{{ aws_vpc_result.subnets | list_to_dict_values('resource_tags.Name', 'id') }}"
+    aws_instances: "{{ aws_all_instances | list_filter('name', aws_filter) }}"
+    aws_vpc_id: "{{ aws_vpc_result.vpc_id }}"
+
+  roles:
+    - aws_vpc
+    - aws_security_groups
+    - aws_keys
+    - aws_instances
+
+
+- name: "Configure AWS routes."
+  gather_facts: no
+  hosts: local
+  vars:
+    aws_vpc_name: "{{ env }}_vpc"
+
+  roles:
+    - aws_route_tables
+
+
+# All remaining plays run per host.
+
+- name: "Activate NAT on gateways."
+  gather_facts: no
+  hosts: nat_gateways
+  user: ec2-user
+
+  roles:
+    - sys_iptables
+
+
+- name: "Create volumes, make and mount filesystems."
+  gather_facts: no
+  hosts: data_volume_enabled
+  user: ec2-user
+
+  roles:
+    - aws_volume
+    - sys_filesystem
+
+
+- name: "Assign elastic IPs."
+  gather_facts: no
+  hosts: elastic_ip_enabled
+  user: ec2-user
+
+  roles:
+    - aws_eip
+
+
+- name: "Create DNS entries for specified instances."
+  gather_facts: no
+  hosts: dns_name_enabled
+  user: ec2-user
+
+  roles:
+    - aws_route53
+

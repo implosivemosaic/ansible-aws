@@ -1,0 +1,10 @@
+---
+
+
+ipt_rules_path: "/etc/sysconfig/iptables"
+ipt_enable_ip_forwarding: yes
+ipt_protocols:
+  - ipv4
+  - ipv6
+ipt_rules: "{{ lookup('file', misc_dir + '/iptables.rules') }}"
+

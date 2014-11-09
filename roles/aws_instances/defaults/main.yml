@@ -1,0 +1,31 @@
+---
+
+# Creates new EC2 instances and assigns each instance to a set of host groups.
+# returns: ec2, ec2_new, ec2_nested
+
+# The list of AWS instance definitions.
+aws_instances: []
+
+# The number of instances that should be available in the VPC.
+# NB: the number of instances actually created is calculated
+# by subtracting 'aws_instance_count' from the number of instances
+# in the 'running' state within the VPC.
+aws_instance_count: 1
+
+# The EC2 instance type.
+# example: "m3.medium"
+aws_instance_type: m3.micro
+
+# Whether or not this instance should block NAT traffic.
+# (if this instance is an Internet gateway you probably want 'false')
+# example: true
+aws_instance_block_nat: true
+
+# Whether or not to assign a public IP.
+# example: true
+aws_instance_public: false
+
+# The SSH public key to use for this instance.
+# example: "key-001"
+aws_instance_ssh_keypair:
+

@@ -1,0 +1,17 @@
+---
+
+
+- name: "assign elastic IP"
+  local_action:
+    module: ec2_eip
+    state: present
+    region: "{{ aws_vpc_region }}"
+    public_ip: "{{ aws_elastic_ip }}"
+    reuse_existing_ip_allowed: true
+    instance_id: "{{ aws_ec2_id }}"
+  register: aws_eip_result
+
+- name: "update EC2 public IP variable"
+  set_fact:
+    ec2_ip_address: "{{ aws_eip_result.public_ip }}"
+

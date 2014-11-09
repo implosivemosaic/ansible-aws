@@ -1,0 +1,15 @@
+---
+
+
+- name: "Create data volume."
+  local_action:
+    module: ec2_vol
+    instance: "{{ aws_ec2_id }}"
+    region: "{{ aws_vpc_region }}"
+    name: "{{ aws_volume_name }}"
+    iops: "{{ aws_volume_iops }}"
+    volume_size: "{{ aws_volume_size }}"
+    device_name: "{{ aws_fs_device }}"
+    state: present
+  register: aws_volume_result
+

@@ -1,0 +1,11 @@
+---
+
+
+- name: "Create AWS route tables."
+  local_action:
+    module: ec2_route_tables
+    state: present
+    vpc_name: "{{ aws_vpc_name }}"
+    region: "{{ aws_vpc_region }}"
+    route_tables: "{{ aws_vpc_route_tables }}"
+  register: aws_route_tables_result

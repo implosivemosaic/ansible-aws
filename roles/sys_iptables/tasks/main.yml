@@ -1,0 +1,42 @@
+---
+
+# TODO KPH: This role is idempotent but reports 'changed' due to shell.
+# The shell tasks need to be replaced or coupled to 'changed_when' clauses.
+
+
+- name: "create rules"
+  sudo: yes
+  template:
+    src: "iptables.rules"
+    dest: "{{ ipt_rules_path }}"
+
+- name: "apply rules"
+  sudo: yes
+  shell: "iptables-restore {{ ipt_rules_path }}"
+
+- name: "enable IPv4 forwarding"
+  sudo: yes
+  shell: "echo 1 > /proc/sys/net/ipv4/ip_forward"
+  when: "ipt_enable_ip_forwarding and 'ipv4' in ipt_protocols"
+
+- name: "enable IPv6 forwarding"
+  sudo: yes
+  shell: "echo 1 > /proc/sys/net/ipv6/conf/all/forwarding"
+  when: "ipt_enable_ip_forwarding and 'ipv6' in ipt_protocols"
+
+- name: "enable IPv4 forwarding permanently"
+  sudo: yes
+  lineinfile:
+    dest: "/etc/sysctl.conf"
+    regexp: "^net.ipv4.ip_forward=1"
+    line: "net.ipv4.ip_forward=1"
+  when: "'ipv4' in ipt_protocols"
+
+- name: "enable IP forwarding permanently (ipv6)"
+  sudo: yes
+  lineinfile:
+    dest: "/etc/sysctl.conf"
+    regexp: "^net.ipv6.conf.all.forwarding=1"
+    line: "net.ipv6.conf.all.forwarding=1"
+  when: "'ipv6' in ipt_protocols"
+

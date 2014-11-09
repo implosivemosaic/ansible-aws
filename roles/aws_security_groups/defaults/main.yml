@@ -1,0 +1,33 @@
+---
+
+
+# Creates a new AWS security group.
+# returns: aws_security_groups_result
+
+
+# The VPC ID
+# example: "vpc-1ab44fa"
+aws_vpc_id:
+
+# The VPC region
+# example: "us-east-1"
+aws_vpc_region:
+
+# Security group definitions list.
+# example:
+#   aws_security_groups:
+#     # The name of the security group (unique per VPC).
+#     - aws_group_name: "elasticsearch"
+#       # The network connection permissions.
+#       aws_group_ports:
+#         - {from_port: 9200, to_port: 9200, proto: tcp, cidr_ip: 0.0.0.0/0}
+#         - {from_port: 9300, to_port: 9300, proto: tcp, cidr_ip: 0.0.0.0/0}
+aws_security_groups: []
+
+# A prefix applied to the security group name of the instance.
+# This is useful when you want to apply a common
+# pattern to the naming without having to specify it
+# explicitly in every instance definition.
+# example: "dev_"
+aws_security_group_name_prefix: ""
+
