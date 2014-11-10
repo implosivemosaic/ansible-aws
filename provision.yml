@@ -4,7 +4,6 @@
 # Provisions AWS VPC network and related resources.
 
 # The next two 'local' plays run locally and require lists of configuration data.
-# Most variables come from group_vars/all/all/*
 - name: "Provision AWS VPC, security groups, keys and instances."
   gather_facts: no
   hosts: local

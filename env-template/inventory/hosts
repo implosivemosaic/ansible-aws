@@ -3,13 +3,13 @@ localhost
 
 [all:children]
 local
-data_volume_
-elastic_ip_
-DEMO_GROUP_REPLACE_ME
+data_volume_enabled
+elastic_ip_enabled
+DEMO_GROUP
 
 [DEMO_GROUP:children]
-tag_Name_DEMO_HOST_REPLACE_ME
-[tag_Name_DEMO_HOST_REPLACE_ME]
+tag_Name_DEMO_HOST
+[tag_Name_DEMO_HOST]
 
 [data_volume_enabled:children]
 tag_data_volume_enabled
@@ -20,5 +20,5 @@ tag_elastic_ip_enabled
 [tag_elastic_ip_enabled]
 
 [nat_gateways:children]
-DEMO_NAT_HOST_REPLACE_ME
+DEMO_GROUP
 
